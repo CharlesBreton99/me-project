@@ -18,6 +18,9 @@ const testing = 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Mode
 
 var firstPerson = true;
 
+var firstPersonCameraData;
+
+
 //animations
 var skeleton = null;
 
@@ -84,7 +87,7 @@ export default class Viewer extends Component {
             // FREE CAMERA (NON MESH)
             var camera = new BABYLON.UniversalCamera("camera", new BABYLON.Vector3(0, 0, 6), scene);
             // camera.rotation = new BABYLON.Vector3(BABYLON.Tools.ToRadians(180));
-            camera.inputs.clear();
+            // camera.inputs.clear();
             camera.minZ = 0;
 
 
@@ -184,40 +187,53 @@ export default class Viewer extends Component {
             };
 
 
-            // var thirdPersonCamera = {
-            //     middle: {
-            //         position: new BABYLON.Vector3(0, 1.35, -5),
-            //         fov: 0.8,
-            //         mouseMin: -5,
-            //         mouseMax: 45
-            //     },
-            //     leftRun: {
-            //         position: new BABYLON.Vector3(0.7, 1.35, -4),
-            //         fov: 0.8,
-            //         mouseMin: -35,
-            //         mouseMax: 45
-            //     },
-            //     rightRun: {
-            //         position: new BABYLON.Vector3(-0.7, 1.35, -4),
-            //         fov: 0.8,
-            //         mouseMin: -35,
-            //         mouseMax: 45
-            //     },
-            //     far: {
-            //         position: new BABYLON.Vector3(0, 1.5, -6),
-            //         fov: 1.5,
-            //         mouseMin: -5,
-            //         mouseMax: 45
-            //     }
-            // };
+            var thirdPersonCamera = {
+                // middle: {
+                //     position: new BABYLON.Vector3(0, 1.35, -5),
+                //     fov: 0.8,
+                //     mouseMin: -5,
+                //     mouseMax: 45
+                // },
+                leftRun: {
+                    position: new BABYLON.Vector3(0, 1.75, -1),
+                    fov: 0,
+                    mouseMin: 0,
+                    mouseMax: 0,
+                    type: "third"
+                },
+                // rightRun: {
+                //     position: new BABYLON.Vector3(-0.7, 1.35, -4),
+                //     fov: 0.8,
+                //     mouseMin: -35,
+                //     mouseMax: 45
+                // },
+                // far: {
+                //     position: new BABYLON.Vector3(0, 1.5, -6),
+                //     fov: 1.5,
+                //     mouseMin: -5,
+                //     mouseMax: 45
+                // }
+            };
 
             // SWITCH FIRST TO THIRD PERSON VIEW [NEED IMPLEMENTS IF WANT TO CHANGE TO THIRD]
             function switchCamera(type) {
-                camera.position = type.position.divide(camera.parent.scaling);
-                camera.rotation.y = BABYLON.Tools.ToRadians(180);
-                camera.fov = type.fov;
-                mouseMin = type.mouseMin;
-                mouseMax = type.mouseMax;
+
+                if (type.type === "third") {
+                    console.log("MIGHT BE WORKING")
+                    firstPersonCameraData = camera
+
+                    camera = new BABYLON.ArcRotateCamera("thirdPersonCamera", 10, scene);
+                    camera.parent = target;
+                    camera.position = new BABYLON.Vector3(0, 1.75, -1)
+                    camera.attachControl(canvas, true);
+                } else {
+                    // camera = firstPersonCameraData;
+                    camera.position = type.position.divide(camera.parent.scaling);
+                    camera.rotation.y = BABYLON.Tools.ToRadians(180);
+                    camera.fov = type.fov;
+                    mouseMin = type.mouseMin;
+                    mouseMax = type.mouseMax;
+                }
             }
 
 
@@ -294,13 +310,15 @@ export default class Viewer extends Component {
                 if (firstPerson === true) {
                     camera.parent = character;
                     switchCamera(firstPersonCamera.middle);
+                    main.position = new BABYLON.Vector3(0, 0, -8);
                 }
-                // else {
-                //     camera.parent = target;
-                //     switchCamera(thirdPersonCamera.leftRun);
-                // }
+                else {
+                    camera.parent = target;
+                    switchCamera(thirdPersonCamera.leftRun);
+                    main.position = new BABYLON.Vector3(0, 3, -15);
+                }
 
-                main.position = new BABYLON.Vector3(0, 0, -8);
+
 
 
                 engine.hideLoadingUI();
@@ -333,12 +351,12 @@ export default class Viewer extends Component {
                             );
                         } else {
                             thirdPersonMovement(
-                                keyboard.getInput(87), //W
-                                keyboard.getInput(83), //S
-                                keyboard.getInput(65), //A
-                                keyboard.getInput(68), //D
-                                keyboard.getInput(32), //Space
-                                keyboard.getInput(16), //Shift
+                                // keyboard.getInput(87), //W
+                                // keyboard.getInput(83), //S
+                                // keyboard.getInput(65), //A
+                                // keyboard.getInput(68), //D
+                                // keyboard.getInput(32), //Space
+                                // keyboard.getInput(16), //Shift
                             );
                         }
                     }
@@ -972,7 +990,7 @@ export default class Viewer extends Component {
             // panel.position = new BABYLON.Vector3(BABYLON.Tools.ToRadians(180));
 
 
-            var titleHeaders = ["NFTS", "PROJECTS", "ABOUT"];
+            var titleHeaders = ["SANDBOX", "PROJECTS", "ABOUT"];
 
             // Let's add some buttons!
             var addButton = function () {
@@ -990,7 +1008,7 @@ export default class Viewer extends Component {
                     button.onPointerUpObservable.add(function (info) {
                         console.log(info._y);
                         if (info._y < 1.5 && info._y !== 0) {
-                            console.log("NFTS")
+                            console.log("SANDBOX")
 
 
 
@@ -1024,6 +1042,14 @@ export default class Viewer extends Component {
             addButton();
 
 
+
+            // const advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane, 2*512, 3*512);
+
+
+            // const panel = new BABYLON.GUI.StackPanel();
+            // panel.verticalAlignment = 0;
+            // advancedTexture.addControl(panel);
+
             var advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
             var textblockLogo = new GUI.TextBlock("textLogo");
             textblockLogo.text = "charles \n breton.";
@@ -1052,8 +1078,35 @@ export default class Viewer extends Component {
                 // Copy listener
                 if (ev.type === BABYLON.ClipboardEventTypes.CUT) {
                     buttonblockMode.isChecked = !buttonblockMode.isChecked
+                    firstPerson = !firstPerson;
+
+                    if (firstPerson === true) {
+                        camera.parent = character;
+                        switchCamera(firstPersonCamera.middle);
+                    }
+                    else {
+                        camera.parent = target;
+                        switchCamera(thirdPersonCamera.leftRun);
+                    }
+
+
                 }
             });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
