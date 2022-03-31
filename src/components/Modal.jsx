@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
 import "./Modal.css";
 
-const Modal = (props) => {
+const Modal = (props, data) => {
   const closeOnEscapeKeyDown = (e) => {
     if ((e.charCode || e.keyCode) === 27) {
       props.onClose();
@@ -39,7 +39,7 @@ const Modal = (props) => {
               title="Figma Frame"
               width="100%"
               height="100%"
-              src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FXjn3ZT4xK5hg6i0F30thOC%2FLONGEVITY-DESIGN%3Fnode-id%3D0%253A1"
+              src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FmFNrpgu0Hvyq0AfeSGf1Zh%2FLONGEVITY-DESIGN%3Fnode-id%3D0%253A1"
               allowfullscreen
             ></iframe>
           </div>
