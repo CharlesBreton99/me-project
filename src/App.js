@@ -1,50 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Modal, Button } from "react-bootstrap";
+
 
 import Viewer from './Viewer/';
 
-import ConfirmationModal from './components/confirmationModal'
 
 
-// function retrievingSelectors() {
-//   // var modal = document.getElementsByClassName("modal");
-//   var modal = document.getElementsByClassName("modal")
-//   var trigger = document.getElementsByClassName("trigger");
-//   var closeButton = document.getElementsByClassName("close-button");
-
-//   console.log(modal)
-
-//   function toggleModal() {
-//     modal.className.toggleModal();
-//     // modal.classList.toggle("show-modal");
-//   }
-
-//   function windowOnClick(event) {
-//     if (event.target === modal) {
-//       toggleModal();
-//     }
-//   }
-
-
-//   // trigger.addEventListener("click", toggleModal);
-//   // closeButton.addEventListener("click", toggleModal);
-//   window.addEventListener("click", windowOnClick);
-// }
+import Modal from './components/Modal'
 
 export default function App() {
 
-  const [modalShow, setModalShow] = useState(false);
+  const [show, setShow] = useState(false);
 
 
 
   // const openModal = () => {
   //   setConfirmModal(true)
   // }
-  const testing = () => {
-    console.log(modalShow)
-    setModalShow(true)
-  }
+  // const testing = () => {
+  //   console.log(modalShow)
+  //   setModalShow(true)
+  // }
   // // Handle closing confirmation modal
   // const onCloseWindow = () => {
   //   setConfirmModal(false);
@@ -54,32 +30,33 @@ export default function App() {
 
   return (
     <div className="App">
-      {/* <div class="modal">
-          <div class="modal-content">
-            <span class="close-button">×</span>
-            <div id="modal-iframe">
-              <p>Modal Dummy Text Dolor Ipsum Babylon!</p>
-            </div>
-          </div>
-        </div> */}
-      {/* <iframe id="iframe_custom" >
-        </iframe> */}
+      {/* <h1>TESTINGF </h1> */}
+      <button onClick={() => setShow(true)}>Show Modal</button>
+      <Modal title="My Modal" onClose={() => setShow(false)} show={show} />
 
+
+      {/* <iframe
+        title="Figma Frame"
+        width="100%"
+        height="800px"
+        src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FXjn3ZT4xK5hg6i0F30thOC%2FLONGEVITY-DESIGN%3Fnode-id%3D0%253A1"
+        allowfullscreen
+      /> */}
       {/* {confirmModal ?
         <ConfirmationModal onCloseWindow={onCloseWindow} />
         : null
       } */}
 
-      <Button variant="primary" onClick={() => testing()}>
+      {/* <Button variant="primary" onClick={() => testing()}>
         Launch vertically centered modal
-      </Button>
+      </Button> */}
 
-      <ConfirmationModal
+      {/* <ConfirmationModal
         show={modalShow}
         onHide={() => setModalShow(false)}
-      />
+      /> */}
 
-      <Viewer />
+      <Viewer onClose={() => setShow(true)} />
     </div>
   );
 }

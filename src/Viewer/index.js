@@ -8,7 +8,7 @@ import "@babylonjs/loaders";
 
 import * as GUI from '@babylonjs/gui'
 
-
+import './index.css';
 
 
 const ybotURL = 'https://raw.githubusercontent.com/TheNosiriN/Babylon-Assets/master/ybot.babylon';
@@ -62,11 +62,11 @@ export default class Viewer extends Component {
 
 
 
-    constructor() {
+    constructor(props) {
         // retrievingSelectors();
 
 
-
+        console.log(props)
 
 
 
@@ -1098,27 +1098,19 @@ export default class Viewer extends Component {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+            // var modal = document.getElementsByClassName("modal");
+            // var trigger = document.querySelector(".trigger");
+            // var closeButton = document.querySelector(".close-button");
 
 
             function toggleModal() {
-                let iframe = document.getElementById("iframe_custom");
-                console.log(iframe)
-                iframe.classList.toggle.display = 'block';
-                // modal.classList.toggle("show-modal");
+                props.onClose()
+                console.log("this is working")
+                document.exitPointerLock();
             }
 
-
+            // trigger.addEventListener("click", toggleModal);
+            // closeButton.addEventListener("click", toggleModal);
 
             // Add Objects holder which will redirect to a iframe
 
@@ -1142,7 +1134,7 @@ export default class Viewer extends Component {
                         console.log("In the list"); // YES! Our mesh is in the list (ground is not there)
                         toggleModal(); // If there was no modal before, it will be shown; it there was modal already, it will be invisible
                         console.log("Mesh: " + pickResult.pickedMesh.name + "; Content: " + meshContent[pickResult.pickedMesh.name]);
-                        document.getElementById("iframe_custom").innerHTML = meshContent[pickResult.pickedMesh.name];
+                        // document.getElementById("iframe_custom").innerHTML = meshContent[pickResult.pickedMesh.name];
                         // You can also use iframe here to display any content. All you need is to bind iframe src value with mesh in our meshContent list
                         // and then change the code above to load the iframe src into the modal
                     }
