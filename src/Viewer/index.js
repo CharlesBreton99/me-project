@@ -325,7 +325,20 @@ export default class Viewer extends Component {
             }, function (evt) { });
 
 
+            var car = BABYLON.SceneLoader.LoadAssetContainer("../assets/", "OFFICIAL.GLTF_matrix#2028_pilled.glb", scene, function (container) {
 
+                container.addAllToScene();
+
+            });
+
+
+            // const testingGLB = 'https://raw.githubusercontent.com/BabylonJS/Assets/master/meshes/';
+
+
+
+            // BABYLON.SceneLoader.ImportMesh("", "", testingGLB, scene, function () {
+
+            // }, function (evt) { });
 
 
 
