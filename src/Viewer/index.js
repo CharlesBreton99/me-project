@@ -325,11 +325,25 @@ export default class Viewer extends Component {
             }, function (evt) { });
 
 
-            var car = BABYLON.SceneLoader.LoadAssetContainer("../assets/", "OFFICIAL.GLTF_matrix#2028_pilled.glb", scene, function (container) {
 
-                container.addAllToScene();
 
-            });
+
+            BABYLON.SceneLoader.ImportMesh("matrixAvatar", "../assets/", "matrix.babylon", scene, function () {
+
+
+
+
+                // engine.hideLoadingUI();
+            }, function (evt) { });
+
+
+
+
+
+
+
+
+
 
 
             // const testingGLB = 'https://raw.githubusercontent.com/BabylonJS/Assets/master/meshes/';
@@ -1120,8 +1134,8 @@ export default class Viewer extends Component {
             var project01 = ["Longevity Training", "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FmFNrpgu0Hvyq0AfeSGf1Zh%2FLONGEVITY-DESIGN%3Fnode-id%3D0%253A1"];
 
 
-            function toggleModal() {
-                localStorage.setItem("modalData", JSON.stringify(project01));
+            function toggleModal(data) {
+                localStorage.setItem("modalData", JSON.stringify(data));
                 props.onClose()
                 console.log("this is working")
                 document.exitPointerLock();
@@ -1141,7 +1155,7 @@ export default class Viewer extends Component {
                 diameter: 2,
                 segments: 32
             }, scene);
-            sphere.position.y = 1;
+            sphere.position = new BABYLON.Vector3(-4, 1, -12);
 
 
             var meshContent = {
@@ -1154,7 +1168,7 @@ export default class Viewer extends Component {
                     console.log("pickResult.hit: " + pickResult.pickedMesh.name);
                     if (pickResult.pickedMesh.name === "sphere") {
                         console.log("In the list"); // YES! Our mesh is in the list (ground is not there)
-                        toggleModal(); // If there was no modal before, it will be shown; it there was modal already, it will be invisible
+                        toggleModal(project01); // If there was no modal before, it will be shown; it there was modal already, it will be invisible
                         console.log("Mesh: " + pickResult.pickedMesh.name + "; Content: " + meshContent[pickResult.pickedMesh.name]);
                         // document.getElementById("iframe_custom").innerHTML = meshContent[pickResult.pickedMesh.name];
                         // You can also use iframe here to display any content. All you need is to bind iframe src value with mesh in our meshContent list
@@ -1164,10 +1178,18 @@ export default class Viewer extends Component {
             }
 
 
+            var matrixAvatar = "OFFICIAL.GLTF_matrix#2028_pilled.glb"
 
 
 
 
+            var assetsManager = new BABYLON.AssetsManager(scene);
+            var meshTask = assetsManager.addMeshTask("matrixAvatar", "", "../assets/", matrixAvatar);
+
+
+            meshTask.onSuccess = function (task) {
+                task.loadedMeshes[0].position = new BABYLON.Vector3(4, 2, -10)
+            }
 
 
 
