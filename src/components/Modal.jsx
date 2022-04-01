@@ -1,3 +1,4 @@
+import { setAndStartTimer } from "@babylonjs/core";
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
@@ -13,7 +14,15 @@ const Modal = (props) => {
     }
   };
 
+  const setData = () => {
+    // var projectToDisplay = JSON.parse(localStorage.getItem("modalData"));
+    // console.log(projectToDisplay);
+    // setTitle(projectToDisplay[0]);
+    // setIframe(projectToDisplay[1]);
+  };
+
   useEffect(() => {
+    console.log("THIS IS GETTING CALL EVERYTYIM RIGHT?");
     var projectToDisplay = JSON.parse(localStorage.getItem("modalData"));
     console.log(projectToDisplay);
     setTitle(projectToDisplay[0]);
@@ -27,7 +36,10 @@ const Modal = (props) => {
 
   return ReactDOM.createPortal(
     <CSSTransition
-      in={props.show}
+      in={
+        props.show
+        // = () => {setData();}
+      }
       unmountOnExit
       timeout={{ enter: 0, exit: 300 }}
     >

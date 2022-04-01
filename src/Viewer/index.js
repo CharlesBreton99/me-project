@@ -10,6 +10,8 @@ import * as GUI from '@babylonjs/gui'
 
 import './index.css';
 
+import Modal from '../components/Modal'
+
 
 const ybotURL = 'https://raw.githubusercontent.com/TheNosiriN/Babylon-Assets/master/ybot.babylon';
 // const m4URL = 'https://raw.githubusercontent.com/TheNosiriN/Babylon-Assets/master/m4a1.obj';
@@ -1140,6 +1142,7 @@ export default class Viewer extends Component {
                 props.onClose()
                 console.log("this is working")
                 document.exitPointerLock();
+                return <Modal title="My Modal" />
             }
 
 
