@@ -15,6 +15,7 @@ const Modal = (props) => {
 
   useEffect(() => {
     var projectToDisplay = JSON.parse(localStorage.getItem("modalData"));
+    console.log(projectToDisplay);
     setTitle(projectToDisplay[0]);
     setIframe(projectToDisplay[1]);
 
@@ -35,7 +36,7 @@ const Modal = (props) => {
           <div className="modal-header">
             <h4 className="modal-title">
               {title}
-              <span onClick={props.onClose} class="close-button">
+              <span onClick={props.onClose} className="close-button">
                 ×
               </span>
             </h4>

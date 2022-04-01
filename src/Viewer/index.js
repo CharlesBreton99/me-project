@@ -15,6 +15,9 @@ const ybotURL = 'https://raw.githubusercontent.com/TheNosiriN/Babylon-Assets/mas
 // const m4URL = 'https://raw.githubusercontent.com/TheNosiriN/Babylon-Assets/master/m4a1.obj';
 const testing = 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/BrainStem/glTF-Embedded/';
 
+var fontFamily = 'Abel';
+
+
 
 var firstPerson = true;
 
@@ -153,13 +156,13 @@ export default class Viewer extends Component {
             helper.groundMaterial.fogEnabled = true;
             helper.isPickable = false;
 
-            // ADD SHAWDOWS TO CHARACTER
+            // ADD SHAWDOWS TO MESH
             var addShadows = function (mesh) {
                 mesh.receiveShadows = true;
                 shadowGenerator.addShadowCaster(mesh);
             }
 
-            // ADD MIRROR TO CHARACTER
+            // ADD MIRROR TO MESH
             var addToMirror = function (mesh) {
                 helper.groundMirrorRenderList.push(mesh);
             }
@@ -236,6 +239,9 @@ export default class Viewer extends Component {
                 }
             }
 
+
+
+            // Lighting for character 
 
             var smallLight = new BABYLON.PointLight("boxLight", new BABYLON.Vector3.Zero(), scene);
             smallLight.diffuse = new BABYLON.Color3(0.3, 0.5, 0.8);
@@ -325,16 +331,6 @@ export default class Viewer extends Component {
             }, function (evt) { });
 
 
-
-
-
-            BABYLON.SceneLoader.ImportMesh("matrixAvatar", "../assets/", "matrix.babylon", scene, function () {
-
-
-
-
-                // engine.hideLoadingUI();
-            }, function (evt) { });
 
 
 
@@ -1018,7 +1014,7 @@ export default class Viewer extends Component {
             // panel.position = new BABYLON.Vector3(BABYLON.Tools.ToRadians(180));
 
 
-            var titleHeaders = ["SANDBOX", "PROJECTS", "ABOUT"];
+            var titleHeaders = ["sandbox", "projects", "about"];
 
             // Let's add some buttons!
             var addButton = function () {
@@ -1057,6 +1053,7 @@ export default class Viewer extends Component {
                     text1.text = titleHeaders[i];
                     text1.color = "#FFFFFF";
                     text1.fontSize = 48;
+                    text1.fontFamily = fontFamily
                     button.content = text1;
 
                     panel.addControl(button);
@@ -1081,7 +1078,8 @@ export default class Viewer extends Component {
             var advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
             var textblockLogo = new GUI.TextBlock("textLogo");
             textblockLogo.text = "charles \n breton.";
-            textblockLogo.fontSize = 24;
+            textblockLogo.fontSize = '200px';
+            textblockLogo.fontFamily = fontFamily
             textblockLogo.top = '-45%';
             textblockLogo.left = '-47%';
             textblockLogo.color = "white";
@@ -1133,6 +1131,9 @@ export default class Viewer extends Component {
 
             var project01 = ["Longevity Training", "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FmFNrpgu0Hvyq0AfeSGf1Zh%2FLONGEVITY-DESIGN%3Fnode-id%3D0%253A1"];
 
+            var nft01 = ["Matrix Avatar #2028", "https://niftys.com/nft/0x423e540cb46db0e4df1ac96bcbddf78a804647d8/2028"];
+            var nft02 = ["Matrix Avatar #54144", "https://niftys.com/nft/0x423e540cb46db0e4df1ac96bcbddf78a804647d8/54144"];
+
 
             function toggleModal(data) {
                 localStorage.setItem("modalData", JSON.stringify(data));
@@ -1145,8 +1146,91 @@ export default class Viewer extends Component {
 
 
 
-            // trigger.addEventListener("click", toggleModal);
-            // closeButton.addEventListener("click", toggleModal);
+            const createItemCard = (imageUrl, title, position, linkUrl) => {
+                const card = BABYLON.MeshBuilder.CreateBox("detail-card", { height: 3, width: 1.6, depth: 0.2 });
+                card.position = new BABYLON.Vector3(6, 1.5, position);
+                card.rotation = new BABYLON.Vector3(0, Math.PI / 2, 0);
+
+                const plane = BABYLON.MeshBuilder.CreatePlane("plane", { height: 3, width: 1.6 });
+                plane.position.z = -0.11;
+                plane.position.y = -0.0;
+                plane.parent = card;
+
+                const advancedTexture03 = GUI.AdvancedDynamicTexture.CreateForMesh(plane, 2 * 512, 3 * 512);
+
+                const panel = new GUI.StackPanel();
+                panel.verticalAlignment = 0;
+                advancedTexture03.addControl(panel);
+
+                const image = new GUI.Image("image", imageUrl);
+                image.height = "1600px";
+                image.width = "1200px";
+                // image.paddingTop = 140;
+                // image.paddingLeft = 40;
+                // image.paddingRight = 40;
+                // image.
+                panel.addControl(image);
+
+
+                const button1 = GUI.Button.CreateSimpleButton("but1", title);
+                button1.width = 0.5;
+                button1.height = 0.1;
+                button1.color = "white";
+                button1.background = "#000";
+                button1.fontSize = 50;
+                button1.fontFamily = fontFamily;
+                button1.paddingBottom = 20;
+                button1.top = 10
+                button1.left = 250
+                button1.paddingLeft = 300;
+
+                // button1.paddingRight = 40;
+
+                button1.onPointerUpObservable.add(function () {
+                    console.log("button1 clicked");
+
+                    let displayNft = [title, linkUrl];
+                    console.log(displayNft)
+                    toggleModal(displayNft);
+                });
+                button1.verticalAlignment = 0;
+                advancedTexture03.addControl(button1);
+            };
+
+            var matrixNftList = new Array();
+            var nftData01 = new Object()
+            nftData01.title = 'MATRIX #2028';
+            nftData01.url = 'https://niftys.com/_next/image?url=https%3A%2F%2Fd2yuebc8sj17lc.cloudfront.net%2Ffilters%3Aautojpg()%2Fv2-production-nfts%2F0x423e540cb46db0e4df1ac96bcbddf78a804647d8-2028&w=3840&q=75';
+            nftData01.linkUrl = 'https://niftys.com/nft/0x423e540cb46db0e4df1ac96bcbddf78a804647d8/2028'
+
+
+
+            var nftData02 = new Object()
+            nftData02.title = 'MATRIX #54144';
+            nftData02.url = 'https://niftys.com/_next/image?url=https%3A%2F%2Fd2yuebc8sj17lc.cloudfront.net%2Ffilters%3Aautojpg()%2Fv2-production-nfts%2F0x28e4b03bc88b59d25f3467b2252b66d4b2c43286-54144&w=3840&q=75'
+            nftData02.linkUrl = 'https://niftys.com/nft/0x28e4b03bc88b59d25f3467b2252b66d4b2c43286/54144'
+
+
+
+            matrixNftList[0] = nftData01;
+            matrixNftList[1] = nftData02;
+
+
+            var initialPositionY = -10
+
+            const createMatrixItemCard = () => {
+                for (let i = 0; i < matrixNftList.length; i++) {
+                    // console.log(matrixNftList[i])
+                    createItemCard(matrixNftList[i].url, matrixNftList[i].title, (i * -2) + initialPositionY, matrixNftList[i].linkUrl);
+                }
+            }
+
+            createMatrixItemCard();
+
+
+
+
+
 
             // Add Objects holder which will redirect to a iframe
 
@@ -1178,19 +1262,24 @@ export default class Viewer extends Component {
             }
 
 
-            var matrixAvatar = "OFFICIAL.GLTF_matrix#2028_pilled.glb"
 
 
 
-
-            var assetsManager = new BABYLON.AssetsManager(scene);
-            var meshTask = assetsManager.addMeshTask("matrixAvatar", "", "../assets/", matrixAvatar);
+            var URL = "https://raw.githubusercontent.com/CharlesBreton99/me-project/master/src/assets/matrix.babylon"
 
 
-            meshTask.onSuccess = function (task) {
-                task.loadedMeshes[0].position = new BABYLON.Vector3(4, 2, -10)
-            }
 
+            BABYLON.SceneLoader.ImportMesh("", "", URL, scene, function (newMeshes) {
+                var mesh = newMeshes[1];
+                mesh.position = new BABYLON.Vector3(6, 1.3, -8)
+                mesh.scaling = new BABYLON.Vector3(0.0014, 0.0014, 0.0014);
+                mesh.rotation = new BABYLON.Vector3(Math.PI / 2, 0, Math.PI / 2);
+
+                // gizmoManager.attachableMeshes = mesh;
+                // gizmoManager.attachToMesh(mesh);
+                // engine.hideLoadingUI();
+                mesh.checkCollisions = true;
+            }, function (evt) { });
 
 
 
@@ -1292,10 +1381,10 @@ function StartButton() {
     var startDivText = document.createElement("span");
 
     startDivText.textContent = "PRESS SPACEBAR";
-
+    startDivText.fontFamily = fontFamily
 
     startDivText.style.left = "0";
-    startDivText.style.fontFamily = "monospace";
+    // startDivText.style.fontFamily = "monospace";
     startDivText.style.color = "white";
     startDivText.style.fontSize = "50px"
 
