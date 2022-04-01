@@ -971,6 +971,7 @@ export default class Viewer extends Component {
 
 
             var boxTitle = BABYLON.MeshBuilder.CreateBox("box", { height: 10, width: 4, depth: 0.25 });
+            boxTitle.checkCollisions = true;
             boxTitle.position.z = -3.8
 
             // Create the 3D UI manager
@@ -1103,11 +1104,19 @@ export default class Viewer extends Component {
             // var closeButton = document.querySelector(".close-button");
 
 
+            var project01 = ["Longevity Training", "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FmFNrpgu0Hvyq0AfeSGf1Zh%2FLONGEVITY-DESIGN%3Fnode-id%3D0%253A1"];
+
+
             function toggleModal() {
+                localStorage.setItem("modalData", JSON.stringify(project01));
                 props.onClose()
                 console.log("this is working")
                 document.exitPointerLock();
             }
+
+
+
+
 
             // trigger.addEventListener("click", toggleModal);
             // closeButton.addEventListener("click", toggleModal);
@@ -1140,6 +1149,15 @@ export default class Viewer extends Component {
                     }
                 }
             }
+
+
+
+
+
+
+
+
+
 
 
 

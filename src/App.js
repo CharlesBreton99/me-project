@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import LogRocket from 'logrocket';
 
 
 import Viewer from './Viewer/';
@@ -7,6 +8,11 @@ import Viewer from './Viewer/';
 
 
 import Modal from './components/Modal'
+
+
+// LogRocket.init('59lkkw/beto');
+
+
 
 export default function App() {
 
@@ -31,7 +37,7 @@ export default function App() {
   return (
     <div className="App">
       {/* <h1>TESTINGF </h1> */}
-      <button onClick={() => setShow(true)}>Show Modal</button>
+      {/* <button onClick={() => setShow(true)}>Show Modal</button> */}
       <Modal title="My Modal" onClose={() => setShow(false)} show={show} />
 
 
