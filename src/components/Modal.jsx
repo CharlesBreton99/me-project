@@ -34,6 +34,14 @@ const Modal = (props) => {
     };
   }, []);
 
+  useEffect(() => {
+    console.log("THIS IS GETTING CALL EVERYTYIM RIGHT?");
+    var projectToDisplay = JSON.parse(localStorage.getItem("modalData"));
+
+    setTitle(projectToDisplay[0]);
+    setIframe(projectToDisplay[1]);
+  });
+
   return ReactDOM.createPortal(
     <CSSTransition
       in={
