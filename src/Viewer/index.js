@@ -721,8 +721,8 @@ export default class Viewer extends Component {
             // addToMirror(box);
             // addShadows(box);
 
-            var box = BABYLON.MeshBuilder.CreateBox("box", { size: 30 }, scene);
-            box.position = new BABYLON.Vector3(8, 10, 18);
+            var box = BABYLON.MeshBuilder.CreateBox("box", { size: 15 }, scene);
+            box.position = new BABYLON.Vector3(8, 10, -35);
             box.checkCollisions = true;
             box.setEnabled(false);
 
@@ -1193,19 +1193,27 @@ export default class Viewer extends Component {
 
             var URL = "https://raw.githubusercontent.com/CharlesBreton99/me-project/master/src/assets/matrix.babylon"
 
-
+            var matrixMeshSkeleton = null;
 
             BABYLON.SceneLoader.ImportMesh("", "", URL, scene, function (newMeshes) {
                 var mesh = newMeshes[1];
-                mesh.position = new BABYLON.Vector3(6, 1.3, -8)
-                mesh.scaling = new BABYLON.Vector3(0.0014, 0.0014, 0.0014);
+                mesh.position = new BABYLON.Vector3(6, -10, -8)
+                mesh.scaling = new BABYLON.Vector3(0.0023, 0.0023, 0.0023);
                 mesh.rotation = new BABYLON.Vector3(Math.PI / 2, 0, Math.PI / 2);
 
                 // gizmoManager.attachableMeshes = mesh;
                 // gizmoManager.attachToMesh(mesh);
                 // engine.hideLoadingUI();
                 mesh.checkCollisions = true;
+
+                matrixMeshSkeleton = mesh;
+
+                console.log(mesh)
+                console.log(matrixMeshSkeleton)
             }, function (evt) { });
+
+
+            // matrixMeshSkeleton.isEnabled(false);
 
 
 
@@ -1269,7 +1277,7 @@ export default class Viewer extends Component {
 
 
 
-            var boxTitle = BABYLON.MeshBuilder.CreateBox("box", { height: 10, width: 4, depth: 0.25 });
+            var boxTitle = BABYLON.MeshBuilder.CreateBox("box", { height: 500, width: 500, depth: 0.25 });
             boxTitle.checkCollisions = true;
             boxTitle.position.z = -3.8
 
