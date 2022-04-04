@@ -14,20 +14,10 @@ const Modal = (props) => {
     }
   };
 
-  const setData = () => {
-    // var projectToDisplay = JSON.parse(localStorage.getItem("modalData"));
-    // console.log(projectToDisplay);
-    // setTitle(projectToDisplay[0]);
-    // setIframe(projectToDisplay[1]);
-  };
-
   useEffect(() => {
-    console.log("THIS IS GETTING CALL EVERYTYIM RIGHT?");
     var projectToDisplay = JSON.parse(localStorage.getItem("modalData"));
-    console.log(projectToDisplay);
     setTitle(projectToDisplay[0]);
     setIframe(projectToDisplay[1]);
-
     document.body.addEventListener("keydown", closeOnEscapeKeyDown);
     return function cleanup() {
       document.body.removeEventListener("keydown", closeOnEscapeKeyDown);
@@ -35,7 +25,6 @@ const Modal = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log("THIS IS GETTING CALL EVERYTYIM RIGHT?");
     var projectToDisplay = JSON.parse(localStorage.getItem("modalData"));
 
     setTitle(projectToDisplay[0]);
@@ -44,10 +33,7 @@ const Modal = (props) => {
 
   return ReactDOM.createPortal(
     <CSSTransition
-      in={
-        props.show
-        // = () => {setData();}
-      }
+      in={props.show}
       unmountOnExit
       timeout={{ enter: 0, exit: 300 }}
     >
