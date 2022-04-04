@@ -724,6 +724,7 @@ export default class Viewer extends Component {
             var box = BABYLON.MeshBuilder.CreateBox("box", { size: 30 }, scene);
             box.position = new BABYLON.Vector3(8, 10, 18);
             box.checkCollisions = true;
+            box.setEnabled(false);
 
             addToMirror(box);
             addShadows(box);
@@ -982,82 +983,6 @@ export default class Viewer extends Component {
             // advancedTexture.addControl(button1);
 
 
-
-            var boxTitle = BABYLON.MeshBuilder.CreateBox("box", { height: 10, width: 4, depth: 0.25 });
-            boxTitle.checkCollisions = true;
-            boxTitle.position.z = -3.8
-
-            // Create the 3D UI manager
-            var manager = new GUI.GUI3DManager(scene);
-
-            // Create a horizontal stack panel
-            var panel = new GUI.StackPanel3D();
-
-            panel.margin = 0.05;
-            // panel.scaling = 10;
-            // panel.width = 0.25;
-            // panel.rotation = 0.2;
-
-
-            manager.addControl(panel);
-            panel.position = new BABYLON.Vector3(0, 2, -4);
-            // panel.position = new BABYLON.Vector3(BABYLON.Tools.ToRadians(180));
-
-
-            var titleHeaders = ["sandbox", "projects", "about"];
-
-            // Let's add some buttons!
-            var addButton = function () {
-                panel.isVertical = true;
-
-                for (let i = 0; i < titleHeaders.length; i++) {
-                    let button = new GUI.Button3D("titles" + i);
-                    button.imageUrl = "../assets/info.png";
-                    // button.imageUrl("../assets/info.png")
-                    // addToMirror(button);
-
-
-
-
-                    button.onPointerUpObservable.add(function (info) {
-                        console.log(info._y);
-                        if (info._y < 1.5 && info._y !== 0) {
-                            console.log("SANDBOX")
-
-
-
-
-
-
-
-
-                        } else if (info._y > 2.5) {
-                            console.log("ABOUT")
-                        } else if (info._y > 1.5 && info._y < 2.5) {
-                            console.log("PROJECTS")
-                        } else {
-                            console.log("NO SELECTION")
-                        }
-                    });
-                    let text1 = new GUI.TextBlock();
-                    text1.text = titleHeaders[i];
-                    text1.color = "#FFFFFF";
-                    text1.fontSize = 48;
-                    text1.fontFamily = fontFamily
-                    button.content = text1;
-
-                    panel.addControl(button);
-                    // addToMirror(panel);
-                }
-
-
-
-            }
-
-            addButton();
-
-
-
             // const advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane, 2*512, 3*512);
 
 
@@ -1186,6 +1111,10 @@ export default class Viewer extends Component {
                 });
                 button1.verticalAlignment = 0;
                 advancedTexture03.addControl(button1);
+                // advancedTexture03.isEnabled(false);
+                // card.isVisible(false);
+                card.position.y = -10;
+                return card;
             };
 
             var matrixNftList = new Array();
@@ -1210,12 +1139,18 @@ export default class Viewer extends Component {
             var initialPositionY = -10
 
             const createMatrixItemCard = () => {
+                var nftList = [];
                 for (let i = 0; i < matrixNftList.length; i++) {
-                    // console.log(matrixNftList[i])
-                    createItemCard(matrixNftList[i].url, matrixNftList[i].title, (i * -2) + initialPositionY, matrixNftList[i].linkUrl);
+                    // createItemCard(matrixNftList[i].url, matrixNftList[i].title, (i * -2) + initialPositionY, matrixNftList[i].linkUrl);
+                    let nftCardData = createItemCard(matrixNftList[i].url, matrixNftList[i].title, (i * -2) + initialPositionY, matrixNftList[i].linkUrl);
+                    // nftCardData.position.y = 0;
+                    console.log(typeof nftCardData);
+                    nftList.push(nftCardData);
                 }
+                return nftList
             }
 
+            var nftCards = createMatrixItemCard();
             createMatrixItemCard();
 
 
@@ -1230,8 +1165,8 @@ export default class Viewer extends Component {
                 diameter: 2,
                 segments: 32
             }, scene);
-            sphere.position = new BABYLON.Vector3(-4, 1, -12);
-
+            sphere.position = new BABYLON.Vector3(-4, -10, -12);
+            // sphere.isEnabled
 
             var meshContent = {
                 box: 'This is extremely nice BOX!  < br / > < p style = "color:green" > No problems with CSS styling. < /p>',
@@ -1321,6 +1256,122 @@ export default class Viewer extends Component {
 
 
             assetsManager.load();
+
+
+
+
+
+
+
+
+
+
+
+
+
+            var boxTitle = BABYLON.MeshBuilder.CreateBox("box", { height: 10, width: 4, depth: 0.25 });
+            boxTitle.checkCollisions = true;
+            boxTitle.position.z = -3.8
+
+            // Create the 3D UI manager
+            var manager = new GUI.GUI3DManager(scene);
+
+            // Create a horizontal stack panel
+            var panel = new GUI.StackPanel3D();
+
+            panel.margin = 0.05;
+            // panel.scaling = 10;
+            // panel.width = 0.25;
+            // panel.rotation = 0.2;
+
+
+            manager.addControl(panel);
+            panel.position = new BABYLON.Vector3(0, 2, -4);
+            // panel.position = new BABYLON.Vector3(BABYLON.Tools.ToRadians(180));
+
+
+            var titleHeaders = ["sandbox", "projects", "about"];
+
+
+            var clearMeshes = () => {
+                box.setEnabled(false);
+                for (let i = 0; i < nftCards.length; i++) {
+                    nftCards[i].position.y = -10;
+                }
+                sphere.position.y = -10
+            }
+
+
+
+
+            // Let's add some buttons!
+            var addButton = function () {
+                panel.isVertical = true;
+
+                for (let i = 0; i < titleHeaders.length; i++) {
+                    let button = new GUI.Button3D("titles" + i);
+                    button.imageUrl = "../assets/info.png";
+                    // button.imageUrl("../assets/info.png")
+                    // addToMirror(button);
+
+
+
+
+                    button.onPointerUpObservable.add(function (info) {
+                        console.log(info._y);
+                        if (info._y < 1.5 && info._y !== 0) {
+                            console.log("SANDBOX")
+
+                            clearMeshes();
+                            box.setEnabled(true);
+
+                            for (let i = 0; i < nftCards.length; i++) {
+                                nftCards[i].position.y = 2;
+                            }
+
+
+
+                        } else if (info._y > 2.5) {
+                            console.log("ABOUT")
+                            clearMeshes();
+
+                        } else if (info._y > 1.5 && info._y < 2.5) {
+                            console.log("PROJECTS")
+                            clearMeshes();
+                            sphere.position.y = 1
+
+
+                        } else {
+                            console.log("NO SELECTION")
+                        }
+                    });
+                    let text1 = new GUI.TextBlock();
+                    text1.text = titleHeaders[i];
+                    text1.color = "#FFFFFF";
+                    text1.fontSize = 48;
+                    text1.fontFamily = fontFamily
+                    button.content = text1;
+
+                    panel.addControl(button);
+                    // addToMirror(panel);
+                }
+
+
+
+            }
+
+            addButton();
+
+
+
+
+
+
+
+
+
+
+
 
 
 
