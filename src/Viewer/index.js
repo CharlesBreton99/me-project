@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as BABYLON from '@babylonjs/core';
 import BabylonScene from '../BabylonScene'; // import the component above linking to file we just created.
-import { Vector3 } from '@babylonjs/core';
 import "@babylonjs/loaders/glTF";
 import "@babylonjs/loaders";
 
@@ -15,7 +14,7 @@ import Modal from '../components/Modal'
 
 const ybotURL = 'https://raw.githubusercontent.com/TheNosiriN/Babylon-Assets/master/ybot.babylon';
 // const m4URL = 'https://raw.githubusercontent.com/TheNosiriN/Babylon-Assets/master/m4a1.obj';
-const testing = 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/BrainStem/glTF-Embedded/';
+// const testing = 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/BrainStem/glTF-Embedded/';
 
 var fontFamily = 'Abel';
 
@@ -23,7 +22,6 @@ var fontFamily = 'Abel';
 
 var firstPerson = true;
 
-var firstPersonCameraData;
 
 
 //animations
@@ -60,7 +58,7 @@ var mouseMin = -35, mouseMax = 100;
 
 var instanceBox = 5;
 
-
+var firstPersonCameraData;
 
 export default class Viewer extends Component {
 
@@ -235,7 +233,7 @@ export default class Viewer extends Component {
 
             var smallLight = new BABYLON.PointLight("boxLight", new BABYLON.Vector3.Zero(), scene);
             smallLight.diffuse = new BABYLON.Color3(0.3, 0.5, 0.8);
-            smallLight.specular = smallLight.specular;
+            // smallLight.specular = smallLight.specular;
             smallLight.intensity = 1;
             smallLight.range = 5;
 
@@ -462,10 +460,10 @@ export default class Viewer extends Component {
                             jumped = false;
                         }
                     }
-                    var rr = skeleton.getAnimationRange("None_Jump");
-                    var a = scene.beginAnimation(skeleton, rr.from + 1, rr.to, false, 1, function () {
-                        jumped = false; console.log("stopped " + rr.from + 1 + " " + rr.to);
-                    });
+                    // var rr = skeleton.getAnimationRange("None_Jump");
+                    // var a = scene.beginAnimation(skeleton, rr.from + 1, rr.to, false, 1, function () {
+                    //     jumped = false; console.log("stopped " + rr.from + 1 + " " + rr.to);
+                    // });
                 } else {
                     vsp = gravity.y;
                 }
@@ -528,10 +526,10 @@ export default class Viewer extends Component {
                             jumped = false;
                         }
                     }
-                    var rr = skeleton.getAnimationRange("None_Jump");
-                    var a = scene.beginAnimation(skeleton, rr.from + 1, rr.to, false, 1, function () {
-                        jumped = false; console.log("stopped " + rr.from + 1 + " " + rr.to);
-                    });
+                    // var rr = skeleton.getAnimationRange("None_Jump");
+                    // var a = scene.beginAnimation(skeleton, rr.from + 1, rr.to, false, 1, function () {
+                    //     jumped = false; console.log("stopped " + rr.from + 1 + " " + rr.to);
+                    // });
                 } else {
                     vsp = gravity.y;
                 }
@@ -708,6 +706,8 @@ export default class Viewer extends Component {
                     case BABYLON.PointerEventTypes.POINTERMOVE:
                         pointerMove();
                         break;
+                    default:
+                        break;
                 }
             });
 
@@ -741,42 +741,42 @@ export default class Viewer extends Component {
             gizmoManager.attachToMesh(box);
 
 
-            let instanceCount = instanceBox;
+            // let instanceCount = instanceBox;
 
             box.registerInstancedBuffer("color", 4);
             box.instancedBuffers.color = new BABYLON.Color4(1, 1, 1, Math.random());
 
-            let baseColors = [];
-            let alphas = [];
+            // let baseColors = [];
+            // let alphas = [];
 
-            let boxInstances = [];
+            // let boxInstances = [];
 
-            for (var index = 0; index < instanceCount - 1; index++) {
-                let instance = box.createInstance("box" + index);
-                instance.position.x = 250 - Math.random() * 500;
-                instance.position.y = 200 - Math.random() * 200;
-                instance.position.z = 250 - Math.random() * 500;
-                // instance.alwaysSelectAsActiveMesh = true;
-
-
-                alphas.push(Math.random());
-                baseColors.push(new BABYLON.Color4(Math.random(), Math.random(), Math.random(), Math.random()));
-                instance.instancedBuffers.color = baseColors[baseColors.length - 1].clone();
-                instance.checkCollisions = true;
+            // for (var index = 0; index < instanceCount - 1; index++) {
+            //     let instance = box.createInstance("box" + index);
+            //     instance.position.x = 250 - Math.random() * 500;
+            //     instance.position.y = 200 - Math.random() * 200;
+            //     instance.position.z = 250 - Math.random() * 500;
+            //     // instance.alwaysSelectAsActiveMesh = true;
 
 
+            //     alphas.push(Math.random());
+            //     baseColors.push(new BABYLON.Color4(Math.random(), Math.random(), Math.random(), Math.random()));
+            //     instance.instancedBuffers.color = baseColors[baseColors.length - 1].clone();
+            //     instance.checkCollisions = true;
 
-                boxInstances.push(instance);
-                // gizmoManager.attachableMeshes = instance
-                // gizmoManager.attachToMesh(box);
 
-                // instance.setEnabled(false);
 
-                // var startPosition = new BABYLON.Vector3(instance.position.x, instance.position.y, instance.position.z);
-                // var endPosition = new BABYLON.Vector3(instance.position.x + Math.random(), instance.position.y + Math.random(), instance.position.z + Math.random());
-                // BABYLON.Animation.CreateAndStartAnimation("anim", box, "position", 30, 100, startPosition, endPosition, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+            //     boxInstances.push(instance);
+            // gizmoManager.attachableMeshes = instance
+            // gizmoManager.attachToMesh(box);
 
-            }
+            // instance.setEnabled(false);
+
+            // var startPosition = new BABYLON.Vector3(instance.position.x, instance.position.y, instance.position.z);
+            // var endPosition = new BABYLON.Vector3(instance.position.x + Math.random(), instance.position.y + Math.random(), instance.position.z + Math.random());
+            // BABYLON.Animation.CreateAndStartAnimation("anim", box, "position", 30, 100, startPosition, endPosition, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+
+            // }
 
             // gizmoManager.attachableMeshes = boxInstances;
 
@@ -1046,10 +1046,6 @@ export default class Viewer extends Component {
 
             var project01 = ["Longevity Training", "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FmFNrpgu0Hvyq0AfeSGf1Zh%2FLONGEVITY-DESIGN%3Fnode-id%3D0%253A1"];
 
-            var nft01 = ["Matrix Avatar #2028", "https://niftys.com/nft/0x423e540cb46db0e4df1ac96bcbddf78a804647d8/2028"];
-            var nft02 = ["Matrix Avatar #54144", "https://niftys.com/nft/0x423e540cb46db0e4df1ac96bcbddf78a804647d8/54144"];
-
-
             function toggleModal(data) {
                 localStorage.setItem("modalData", JSON.stringify(data));
                 props.onClose()
@@ -1117,15 +1113,15 @@ export default class Viewer extends Component {
                 return card;
             };
 
-            var matrixNftList = new Array();
-            var nftData01 = new Object()
+            var matrixNftList = [];
+            var nftData01 = [];
             nftData01.title = 'MATRIX #2028';
             nftData01.url = 'https://niftys.com/_next/image?url=https%3A%2F%2Fd2yuebc8sj17lc.cloudfront.net%2Ffilters%3Aautojpg()%2Fv2-production-nfts%2F0x423e540cb46db0e4df1ac96bcbddf78a804647d8-2028&w=3840&q=75';
             nftData01.linkUrl = 'https://niftys.com/nft/0x423e540cb46db0e4df1ac96bcbddf78a804647d8/2028'
 
 
 
-            var nftData02 = new Object()
+            var nftData02 = [];
             nftData02.title = 'MATRIX #54144';
             nftData02.url = 'https://niftys.com/_next/image?url=https%3A%2F%2Fd2yuebc8sj17lc.cloudfront.net%2Ffilters%3Aautojpg()%2Fv2-production-nfts%2F0x28e4b03bc88b59d25f3467b2252b66d4b2c43286-54144&w=3840&q=75'
             nftData02.linkUrl = 'https://niftys.com/nft/0x28e4b03bc88b59d25f3467b2252b66d4b2c43286/54144'
@@ -1221,49 +1217,49 @@ export default class Viewer extends Component {
 
 
 
-            var assetsManager = new BABYLON.AssetsManager(scene);
+            // var assetsManager = new BABYLON.AssetsManager(scene);
 
 
-            assetsManager.onTaskSuccessObservable.add(function (task) {
-                if (task.name == "task") {
-                    // task.loadedMeshes[0].parent = scene.getMeshByName("ground");
-                    // task.loadedMeshes[0].setPositionWithLocalVector(new BABYLON.Vector3(0, 8, 0)) // x == z , y == z, z == y from player's view
-                    // task.loadedMeshes[0].rotation = new BABYLON.Vector3(-Math.PI / 2, 0, 0);
+            // assetsManager.onTaskSuccessObservable.add(function (task) {
+            //     if (task.name === "task") {
+            //         // task.loadedMeshes[0].parent = scene.getMeshByName("ground");
+            //         // task.loadedMeshes[0].setPositionWithLocalVector(new BABYLON.Vector3(0, 8, 0)) // x == z , y == z, z == y from player's view
+            //         // task.loadedMeshes[0].rotation = new BABYLON.Vector3(-Math.PI / 2, 0, 0);
 
-                    // //Simple invisble crate that acts as a hitbox to avoid expensive pixel-perfect collision
-                    // var box = BABYLON.MeshBuilder.CreateBox("myBox", { height: 1.5, width: 0.50, depth: 1 }, game.scene);
-                    // box.isVisible = false;
-                    // box.setPositionWithLocalVector(new BABYLON.Vector3(0, 1, 0))
-                    // box.showBoundingBox = true;
-                    // box.parent = task.loadedMeshes[0];
-                    // box.checkCollisions = true;
-                }
-                else if (task.name == "task2") {
-                    task.loadedMeshes[0].parent = scene.getMeshByName("ground");
-                    task.loadedMeshes[0].setPositionWithLocalVector(new BABYLON.Vector3(-6, 8, -4)) // x == z , y == z, z == y from player's view
-                    task.loadedMeshes[0].rotation = new BABYLON.Vector3(-Math.PI / 2, 0, 0);
-                    task.loadedMeshes[0].scaling = new BABYLON.Vector3(0.1, 0.1, 0.1);
-                }
-                console.log('task successful', task);
-            });
-
-
+            //         // //Simple invisble crate that acts as a hitbox to avoid expensive pixel-perfect collision
+            //         // var box = BABYLON.MeshBuilder.CreateBox("myBox", { height: 1.5, width: 0.50, depth: 1 }, game.scene);
+            //         // box.isVisible = false;
+            //         // box.setPositionWithLocalVector(new BABYLON.Vector3(0, 1, 0))
+            //         // box.showBoundingBox = true;
+            //         // box.parent = task.loadedMeshes[0];
+            //         // box.checkCollisions = true;
+            //     }
+            //     else if (task.name === "task2") {
+            //         task.loadedMeshes[0].parent = scene.getMeshByName("ground");
+            //         task.loadedMeshes[0].setPositionWithLocalVector(new BABYLON.Vector3(-6, 8, -4)) // x == z , y == z, z == y from player's view
+            //         task.loadedMeshes[0].rotation = new BABYLON.Vector3(-Math.PI / 2, 0, 0);
+            //         task.loadedMeshes[0].scaling = new BABYLON.Vector3(0.1, 0.1, 0.1);
+            //     }
+            //     console.log('task successful', task);
+            // });
 
 
-            // Called when all tasks in the assetsManger are done
-            assetsManager.onTasksDoneObservable.add(function (tasks) {
-                var errors = tasks.filter(function (task) { return task.taskState === BABYLON.AssetTaskState.ERROR });
-                var successes = tasks.filter(function (task) { return task.taskState !== BABYLON.AssetTaskState.ERROR });
-
-                //console.log(tasks);
-            });
 
 
-            // assetsManager.addMeshTask("task", "", "./scenes/", "dummy3.babylon");
-            assetsManager.addMeshTask("task2", "", "../assets/", "skull.babylon");
+            // // Called when all tasks in the assetsManger are done
+            // assetsManager.onTasksDoneObservable.add(function (tasks) {
+            //     // var errors = tasks.filter(function (task) { return task.taskState === BABYLON.AssetTaskState.ERROR });
+            //     // var successes = tasks.filter(function (task) { return task.taskState !== BABYLON.AssetTaskState.ERROR });
+
+            //     //console.log(tasks);
+            // });
 
 
-            assetsManager.load();
+            // // assetsManager.addMeshTask("task", "", "./scenes/", "dummy3.babylon");
+            // assetsManager.addMeshTask("task2", "", "../assets/", "skull.babylon");
+
+
+            // assetsManager.load();
 
 
 
@@ -1573,9 +1569,6 @@ function addCrosshair(scene, camera) {
     let reticule
 
     const createOutline = () => {
-        let c = 1
-
-
         // ctx.moveTo(c, w * 0.25)
         // ctx.lineTo(c, c)
         // ctx.lineTo(w * 0.25, c)
@@ -1639,50 +1632,50 @@ function addCrosshair(scene, camera) {
 }
 
 
-function createSpacesBoxes(scene) {
+// function createSpacesBoxes(scene) {
 
-    var box = BABYLON.MeshBuilder.CreateBox("box", { size: 30 }, scene);
-    box.position = new BABYLON.Vector3(8, -30, 18);
-    box.checkCollisions = true;
-
-
-    box.material = new BABYLON.StandardMaterial("lightBox", scene);
-
-    // box.alwaysSelectAsActiveMesh = true;
-
-    let instanceCount = instanceBox;
-
-    box.registerInstancedBuffer("color", 4);
-    box.instancedBuffers.color = new BABYLON.Color4(1, 1, 1, Math.random());
-
-    let baseColors = [];
-    let alphas = [];
-
-    let boxInstances = [];
-
-    for (var index = 0; index < instanceCount - 1; index++) {
-        let instance = box.createInstance("box" + index);
-        instance.position.x = 250 - Math.random() * 500;
-        instance.position.y = 200 - Math.random() * 200;
-        instance.position.z = 250 - Math.random() * 500;
-        // instance.alwaysSelectAsActiveMesh = true;
+//     var box = BABYLON.MeshBuilder.CreateBox("box", { size: 30 }, scene);
+//     box.position = new BABYLON.Vector3(8, -30, 18);
+//     box.checkCollisions = true;
 
 
-        alphas.push(Math.random());
-        baseColors.push(new BABYLON.Color4(Math.random(), Math.random(), Math.random(), Math.random()));
-        instance.instancedBuffers.color = baseColors[baseColors.length - 1].clone();
-        instance.checkCollisions = true;
+//     box.material = new BABYLON.StandardMaterial("lightBox", scene);
+
+//     // box.alwaysSelectAsActiveMesh = true;
+
+//     let instanceCount = instanceBox;
+
+//     box.registerInstancedBuffer("color", 4);
+//     box.instancedBuffers.color = new BABYLON.Color4(1, 1, 1, Math.random());
+
+//     let baseColors = [];
+//     let alphas = [];
+
+//     let boxInstances = [];
+
+//     for (var index = 0; index < instanceCount - 1; index++) {
+//         let instance = box.createInstance("box" + index);
+//         instance.position.x = 250 - Math.random() * 500;
+//         instance.position.y = 200 - Math.random() * 200;
+//         instance.position.z = 250 - Math.random() * 500;
+//         // instance.alwaysSelectAsActiveMesh = true;
+
+
+//         alphas.push(Math.random());
+//         baseColors.push(new BABYLON.Color4(Math.random(), Math.random(), Math.random(), Math.random()));
+//         instance.instancedBuffers.color = baseColors[baseColors.length - 1].clone();
+//         instance.checkCollisions = true;
 
 
 
-        boxInstances.push(instance);
+//         boxInstances.push(instance);
 
-        // instance.setEnabled(false);
+//         // instance.setEnabled(false);
 
-        // var startPosition = new BABYLON.Vector3(instance.position.x, instance.position.y, instance.position.z);
-        // var endPosition = new BABYLON.Vector3(instance.position.x + Math.random(), instance.position.y + Math.random(), instance.position.z + Math.random());
-        // BABYLON.Animation.CreateAndStartAnimation("anim", box, "position", 30, 100, startPosition, endPosition, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+//         // var startPosition = new BABYLON.Vector3(instance.position.x, instance.position.y, instance.position.z);
+//         // var endPosition = new BABYLON.Vector3(instance.position.x + Math.random(), instance.position.y + Math.random(), instance.position.z + Math.random());
+//         // BABYLON.Animation.CreateAndStartAnimation("anim", box, "position", 30, 100, startPosition, endPosition, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
 
-    }
-    box.isEnabled = false;
-}
+//     }
+//     box.isEnabled = false;
+// }

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import LogRocket from 'logrocket';
+// import LogRocket from 'logrocket';
 
 
 import Viewer from './Viewer/';
