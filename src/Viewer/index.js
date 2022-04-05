@@ -1187,26 +1187,26 @@ export default class Viewer extends Component {
 
 
 
-            var URL = "https://raw.githubusercontent.com/CharlesBreton99/me-project/master/src/assets/matrix.babylon"
+            // var URL = "https://raw.githubusercontent.com/CharlesBreton99/me-project/master/src/assets/matrix.babylon"
 
-            var matrixMeshSkeleton = null;
+            // var matrixMeshSkeleton = null;
 
-            BABYLON.SceneLoader.ImportMesh("", "", URL, scene, function (newMeshes) {
-                var mesh = newMeshes[1];
-                mesh.position = new BABYLON.Vector3(6, -10, -8)
-                mesh.scaling = new BABYLON.Vector3(0.0023, 0.0023, 0.0023);
-                mesh.rotation = new BABYLON.Vector3(Math.PI / 2, 0, Math.PI / 2);
+            // BABYLON.SceneLoader.ImportMesh("", "", URL, scene, function (newMeshes) {
+            //     var mesh = newMeshes[1];
+            //     mesh.position = new BABYLON.Vector3(6, -10, -8)
+            //     mesh.scaling = new BABYLON.Vector3(0.0023, 0.0023, 0.0023);
+            //     mesh.rotation = new BABYLON.Vector3(Math.PI / 2, 0, Math.PI / 2);
 
-                // gizmoManager.attachableMeshes = mesh;
-                // gizmoManager.attachToMesh(mesh);
-                // engine.hideLoadingUI();
-                mesh.checkCollisions = true;
+            //     // gizmoManager.attachableMeshes = mesh;
+            //     // gizmoManager.attachToMesh(mesh);
+            //     // engine.hideLoadingUI();
+            //     mesh.checkCollisions = true;
 
-                matrixMeshSkeleton = mesh;
+            //     matrixMeshSkeleton = mesh;
 
-                console.log(mesh)
-                console.log(matrixMeshSkeleton)
-            }, function (evt) { });
+            //     console.log(mesh)
+            //     console.log(matrixMeshSkeleton)
+            // }, function (evt) { });
 
 
             // matrixMeshSkeleton.isEnabled(false);
@@ -1364,7 +1364,7 @@ export default class Viewer extends Component {
 
             }
 
-            // addButton();
+            addButton();
 
 
 

@@ -1,4 +1,3 @@
-import { setAndStartTimer } from "@babylonjs/core";
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
