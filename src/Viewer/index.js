@@ -1364,7 +1364,7 @@ export default class Viewer extends Component {
 
             }
 
-            addButton();
+            // addButton();
 
 
 
